@@ -1,0 +1,42 @@
+image=~/.config/sway/wallpaper.jpg
+scaling=fill
+
+font=JetBrains Mono
+font-size=14
+
+# Always show the indicator so it's clear where to type
+indicator-idle-visible
+# Show number of failed attempts
+show-failed-attempts
+# Warn when caps lock is on
+indicator-caps-lock
+
+indicator-radius=60
+indicator-thickness=6
+
+# Idle state
+ring-color=e98749ff
+inside-color=1e1e2ecc
+text-color=cdd6f4ff
+line-color=00000000
+separator-color=00000000
+key-hl-color=a6e3a1ff
+bs-hl-color=f38ba8ff
+
+# Caps lock
+ring-caps-lock-color=f9e2afff
+inside-caps-lock-color=1e1e2ecc
+text-caps-lock-color=f9e2afff
+line-caps-lock-color=00000000
+
+# Verifying
+ring-ver-color=89b4faff
+inside-ver-color=1e1e2ecc
+text-ver-color=89b4faff
+line-ver-color=00000000
+
+# Wrong password
+ring-wrong-color=f38ba8ff
+inside-wrong-color=1e1e2ecc
+text-wrong-color=f38ba8ff
+line-wrong-color=00000000

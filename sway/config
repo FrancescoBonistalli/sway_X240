@@ -16,7 +16,7 @@ set $browser firefox
 set $filemanager nautilus
 
 # Lock command
-set $lock 'swaylock -f -c 1e1e2e'
+set $lock 'swaylock -f'
 
 
 ### Output (display) configuration ###
