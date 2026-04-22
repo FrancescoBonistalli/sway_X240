@@ -41,6 +41,7 @@ input "type:touchpad" {
     scroll_method two_finger
     accel_profile adaptive
     pointer_accel 0.2
+    drag_lock disabled
 }
 
 # Trackpoint - classic ThinkPad red nub
@@ -63,8 +64,8 @@ gaps inner 6
 gaps outer 2
 
 # Borders
-default_border pixel 5
-default_floating_border pixel 5
+default_border pixel 4
+default_floating_border pixel 4
 titlebar_padding 4
 font pango:JetBrains Mono 10
 
@@ -83,7 +84,7 @@ exec /usr/libexec/polkit-gnome-authentication-agent-1
 exec mako
 exec nm-applet --indicator
 exec blueman-applet
-exec_always pkill wlsunset; wlsunset -t 3999 -T 4000
+exec_always pkill wlsunset; sleep 1 && wlsunset -t 3999 -T 4000
 exec wl-paste --type text --watch cliphist store
 exec swayidle -w \
     timeout 300 $lock \
