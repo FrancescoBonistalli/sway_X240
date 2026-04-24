@@ -72,7 +72,7 @@ font pango:JetBrains Mono 10
 
 # Catppuccin color scheme — uniform vivid border on focused window
 # class                 border  bg      text    indicator child_border
-client.focused          #da7333 #1e1e2e #cdd6f4 #da7333   #da7333
+client.focused          #da7333 #1e1e2e #cdd6f4 #8c3e0f   #da7333
 client.focused_inactive #45475a #1e1e2e #585b70 #45475a   #45475a
 client.unfocused        #313244 #1e1e2e #6c7086 #313244   #313244
 client.urgent           #f38ba8 #1e1e2e #cdd6f4 #f38ba8   #f38ba8
@@ -201,7 +201,7 @@ bindsym XF86AudioPrev exec playerctl previous
 
 # Brightness
 bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
-bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessDown exec ~/.config/sway/scripts/brightness-down.sh
 
 # Mouse drag/resize
 floating_modifier $mod normal
@@ -216,8 +216,10 @@ bindswitch --reload --locked lid:on exec $lock
 exec_always {
     gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
     gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+    gsettings set org.gnome.desktop.interface text-scaling-factor 1.1
 }
 
+bindsym $mod+shift+t exec ~/.config/sway/scripts/toggle-theme.sh
 
 ### Status bar ###
 bar {
