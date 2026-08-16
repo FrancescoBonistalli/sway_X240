@@ -1,5 +1,5 @@
 * {
-    font-family: "JetBrains Mono", FontAwesome, monospace;
+    font-family: "Noto Sans Mono", "Font Awesome 6 Free", "Font Awesome 6 Brands", monospace;
     font-size: 18px;
 }
 
@@ -67,7 +67,7 @@ button:hover {
 #custom-media,
 #tray,
 #mode,
-#idle_inhibitor,
+#custom-idle_inhibitor,
 #scratchpad,
 #power-profiles-daemon,
 #mpd {
@@ -215,11 +215,11 @@ label:focus {
     color: #f38ba8;
 }
 
-#idle_inhibitor {
+#custom-idle_inhibitor {
     color: #6c7086;
 }
 
-#idle_inhibitor.activated {
+#custom-idle_inhibitor.activated {
     color: #f9e2af;
 }
 

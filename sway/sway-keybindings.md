@@ -8,14 +8,16 @@ The **Mod key** is `Super` (Windows key).
 | `Super + Return` | Open terminal |
 | `Super + D` | App launcher |
 | `Super + B` | Browser |
-| `Super + E` | File manager |
-| `Super + L` | Lock screen |
+| `Super + F` | File manager |
+| `Super + Shift + L` | Lock screen |
+| `Super + N` | Toggle night light (wlsunset) |
+| `Super + V` | Clipboard history picker (cliphist + rofi) — selecting an entry only copies it; focus the target field and press `Ctrl+V` to paste |
 
 ## Window management
 | Keybind | Action |
 |---|---|
 | `Super + Shift + Q` | Close window |
-| `Super + F` | Fullscreen |
+| `Super + Shift + F` | Intermediate fullscreen: hide/show waybar only |
 | `Super + Shift + Space` | Toggle floating |
 | `Super + Space` | Toggle focus between tiled/floating |
 | `Super + R` | Resize mode (arrows to resize, `Escape` to exit) |
@@ -23,16 +25,18 @@ The **Mod key** is `Super` (Windows key).
 ## Focus & movement
 | Keybind | Action |
 |---|---|
-| `Super + H/J/K/L` or arrows | Focus left/down/up/right |
-| `Super + Shift + H/J/K/L` or arrows | Move window left/down/up/right |
+| `Super + H/J/K/L` | Focus left/down/up/right |
+| `Super + Down/Up` | Focus down/up (arrow-key alternative; left/right use workspace switching instead) |
+| `Super + Shift + Arrows` | Move window left/down/up/right |
 
 ## Layout
 | Keybind | Action |
 |---|---|
-| `Super + H` | Split horizontal (note: conflicts with focus — see config) |
-| `Super + V` | Split vertical |
-| `Super + S` | Stacking layout |
+| `Super + Ctrl + S` | Split horizontal |
+| `Super + Ctrl + T` | Split vertical |
+| `Super + S` | Toggle waybar visibility *(temporary — was Stacking layout, reverted until the stuck-stacking bug is fixed)* |
 | `Super + W` | Tabbed layout |
+| `Super + Shift + S` | Reset stuck tabbed/stacking layout back to tiling (whole workspace) |
 | `Super + Z` | Toggle split direction |
 | `Super + A` | Focus parent container |
 
@@ -41,6 +45,8 @@ The **Mod key** is `Super` (Windows key).
 |---|---|
 | `Super + 1..0` | Switch to workspace 1–10 |
 | `Super + Shift + 1..0` | Move window to workspace 1–10 |
+| `Super + scroll` (anywhere over a window) | Previous/next workspace — same as scrolling over the workspace numbers in waybar |
+| `Super + Ctrl + Up/Down` | Reorder the *current* workspace with its neighbor (swaps numbers, stays on the same content — like GNOME's workspace-reordering extension), instead of moving windows between workspaces |
 
 ## Scratchpad
 | Keybind | Action |
@@ -52,7 +58,6 @@ The **Mod key** is `Super` (Windows key).
 | Keybind | Action |
 |---|---|
 | `Print` | Region screenshot → clipboard |
-| `Shift + Print` | Full screenshot → file in `~/Pictures` |
 
 ## Media & brightness
 | Keybind | Action |
@@ -60,6 +65,7 @@ The **Mod key** is `Super` (Windows key).
 | `XF86AudioRaiseVolume` / `XF86AudioLowerVolume` | Volume up/down |
 | `XF86AudioMute` | Mute toggle |
 | `XF86AudioPlay/Next/Prev` | Media controls |
+| `$mod + P` | Play/pause media (playerctl) |
 | `XF86MonBrightnessUp/Down` | Brightness up/down |
 
 ## System
