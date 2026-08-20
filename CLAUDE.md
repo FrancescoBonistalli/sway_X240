@@ -10,7 +10,11 @@ A personal dotfiles backup for a Lenovo ThinkPad X240 running Sway (Wayland). It
 
 ## Workflow
 
-- `./sync.sh` — pulls the live configs from `~/.config/{sway,waybar,alacritty,swaylock}` into this repo (overwrites repo copies with what's currently on disk).
+- `./sync.sh` — pulls the live configs from `~/.config/` into this repo.
+- `./install.sh` — pushes the repo's configs out to `~/.config/`. This is how repo changes get applied to the live machine; don't hand-copy or reload configs instead of it.
+- `sync-lib.sh` — sourced by both of the above; holds the tracked-directory list (`DIRS`) and the `copy_configs <src root> <dst root> <label>` function they both call, so the two directions can't drift. **Add a new config directory here, in `DIRS`, and nowhere else.**
+
+Both directions behave the same way: diff destination → source (so `+` lines are what would land in the destination), print the diff colored git-style, then ask `Apply? [y/N]` — answering anything but `y`/`yes` aborts with exit 1 and copies nothing. Only the directories that actually differ get copied. If nothing differs, they print `nothing to do`. Files that exist only in the destination (e.g. `sway/sway-config` and the `.md` docs, which live in the repo but not in `~/.config/sway`) are filtered out of the diff, since `cp` never deletes them.
 - `./push.sh` — `git add . && git commit -m "update configs" && git push` (note: always uses the same generic commit message).
 
 Typical loop: edit configs live under `~/.config/...` → test them on the actual machine → run `sync.sh` to pull the changes into the repo → commit/push (manually, or via `push.sh`).
@@ -27,6 +31,7 @@ Because `push.sh` always commits with the literal message "update configs", chec
 - `waybar/config.jsonc`, `waybar/style.css` — Waybar bar config/styling. `waybar/power_menu.sh` (+ `power_menu.xml`) implements the custom power-menu module. `waybar/notes.txt` is a scratch/snippet file, not authoritative config.
 - `alacritty/alacritty.toml` — Alacritty terminal config.
 - `swaylock/config` — swaylock (lock screen) config; Catppuccin Mocha color scheme, shares the Sway wallpaper.
+- `swaync/config.json`, `swaync/style.css` — SwayNotificationCenter (notification daemon + notification center) config/styling. Started from `sway/config` (`exec swaync`) and toggled with `$mod+shift+n` (`swaync-client -t -sw`).
 
 ## Conventions
 

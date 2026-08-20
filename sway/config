@@ -87,7 +87,7 @@ bar {
 ### Autostart ###
 exec ~/.config/sway/scripts/workspace_compact.py
 exec /usr/libexec/polkit-gnome-authentication-agent-1
-exec mako
+exec swaync
 exec nm-applet --indicator
 exec blueman-applet
 exec_always pkill wlsunset; sleep 1 && wlsunset -t 3999 -T 4000
@@ -111,6 +111,7 @@ bindsym $mod+shift+c reload
 bindsym $mod+shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
 bindsym $mod+shift+l exec $lock
 bindsym $mod+n exec ~/.config/sway/scripts/toggle-nightlight.sh
+bindsym $mod+shift+n exec swaync-client -t -sw
 bindsym $mod+c exec ~/.config/waybar/scripts/idle_inhibitor.sh toggle
 bindsym $mod+v exec 'cliphist list | rofi -dmenu -p clipboard | cliphist decode | wl-copy'
 

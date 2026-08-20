@@ -11,6 +11,7 @@ The **Mod key** is `Super` (Windows key).
 | `Super + F` | File manager |
 | `Super + Shift + L` | Lock screen |
 | `Super + N` | Toggle night light (wlsunset) |
+| `Super + Shift + N` | Toggle notification center (swaync) |
 | `Super + V` | Clipboard history picker (cliphist + rofi) — selecting an entry only copies it; focus the target field and press `Ctrl+V` to paste |
 
 ## Window management

@@ -1,8 +1,10 @@
 #!/bin/bash
+# Push this repo's configs out to ~/.config, after showing what would change
+# and asking for confirmation.
 
-cp -r sway ~/.config/
-cp -r waybar ~/.config/
-cp -r alacritty ~/.config/
-cp -r swaylock ~/.config/
+set -uo pipefail
 
-echo "Done!"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$REPO_DIR/sync-lib.sh"
+
+copy_configs "$REPO_DIR" "$HOME/.config" "~/.config"
