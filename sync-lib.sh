@@ -6,6 +6,13 @@
 # The config directories tracked by this repo. Both scripts use this list.
 DIRS=(sway waybar alacritty swaylock swaync)
 
+# Repo-only files: documentation, the alternate draft config, scratch notes
+# and editor/agent leftovers. None of these are read by sway, waybar or any
+# script, so they stay in the repo and never get copied to ~/.config.
+# Patterns match basenames, and apply to both the diff and the copy in both
+# directions — so sync.sh won't drag a stray ~/.config/*.md back in either.
+EXCLUDES=('*.md' 'sway-config' 'notes.txt' '*.bak' '.claude')
+
 # git-style coloring: added lines green, removed red. Skipped when stdout
 # isn't a terminal (piped to a file, a pager without -R, etc.).
 colorize() {
@@ -25,9 +32,16 @@ colorize() {
 # copy_configs <source root> <destination root> <destination label>
 copy_configs() {
     local src_root="$1" dst_root="$2" dst_label="$3"
-    local d src dst out answer
+    local d src dst out answer x
     local changed=()
     local diffs=""
+    local diff_args=(-ru)
+    local tar_args=()
+
+    for x in "${EXCLUDES[@]}"; do
+        diff_args+=(-x "$x")
+        tar_args+=(--exclude="$x")
+    done
 
     for d in "${DIRS[@]}"; do
         src="$src_root/$d"
@@ -47,7 +61,7 @@ copy_configs() {
         # destination -> source, so '+' lines are what would land in the
         # destination. Files that only exist in the destination are dropped:
         # cp never removes them.
-        out="$(diff -ru "$dst" "$src" | awk -v p="Only in $dst:" 'index($0, p) == 1 { next } { print }')"
+        out="$(diff "${diff_args[@]}" "$dst" "$src" | awk -v p="Only in $dst:" 'index($0, p) == 1 { next } { print }')"
 
         if [[ -n "$out" ]]; then
             changed+=("$d")
@@ -72,8 +86,11 @@ copy_configs() {
             ;;
     esac
 
+    # tar rather than cp: it honours the same EXCLUDES the diff used, so what
+    # gets copied is exactly what was shown. Like cp -r it overwrites and
+    # merges, never deletes.
     for d in "${changed[@]}"; do
-        cp -r "$src_root/$d" "$dst_root/"
+        tar -C "$src_root" -cf - "${tar_args[@]}" "$d" | tar -C "$dst_root" -xf -
     done
 
     echo "Done!"

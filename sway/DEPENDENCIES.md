@@ -11,25 +11,45 @@ grep -oE '(exec |exec_always )[^;]*' config
 
 ## 1. Base install (Fedora / dnf)
 
+The machine-readable list lives in **`../packages.txt`** at the repo root —
+one package name per line, no comments, so it can be fed straight to dnf:
+
 ```
-sudo dnf install sway swaylock swayidle swaybg swaybar swaynag \
-    waybar alacritty rofi mako \
-    NetworkManager-applet blueman polkit-gnome \
-    wlsunset wl-clipboard grim slurp \
-    brightnessctl playerctl pulseaudio-utils libnotify \
-    i3ipc python3 python3-i3ipc \
-    gnome-themes-extra glib2 \
-    pavucontrol nautilus firefox
+sudo dnf copr enable alternateved/cliphist   # see below; cliphist is in the list
+sudo dnf install $(< packages.txt)
+sudo dnf copr disable alternateved/cliphist
 ```
 
-Some of these (`swaylock`, `swayidle`, `swaybg`, `swaybar`, `swaynag`) may
-already be pulled in as dependencies of the `sway` package itself on some
-distros — check with `rpm -q swaylock` etc. before assuming a separate
-install is needed on a non-Fedora system.
+`packages.txt` lists **only what is actually installed on this machine** —
+every entry was checked with `rpm -q`, so the file reproduces the working
+setup rather than an aspirational one. Things the config references but that
+aren't installed here are tracked in section 3 instead, not in the list.
+Re-verify after editing it:
 
-`cliphist` is deliberately **not** in the list above — it's not in Fedora's
-official repos, only in third-party COPRs. Install it separately, then
-disable the COPR so it doesn't get pulled into future `dnf upgrade` runs
+```
+while read -r p; do rpm -q "$p" >/dev/null || echo "MISSING $p"; done < packages.txt
+```
+
+Keep `packages.txt` and the table in section 2 in step when adding a
+dependency. Package names were verified against Fedora 43 with
+`rpm -q` / `dnf list` — several differ from the obvious guess:
+`network-manager-applet` (not `NetworkManager-applet`),
+`SwayNotificationCenter` (provides `swaync`/`swaync-client`), and
+`python3-i3ipc` (there is no plain `i3ipc` package).
+
+`swaybar` and `swaynag` are **not** separate packages on Fedora — both
+binaries ship inside `sway` itself (`rpm -qf $(command -v swaynag)`), so only
+`swaylock`, `swayidle` and `swaybg` are listed alongside it. On a non-Fedora
+system check whether even those are already pulled in transitively.
+
+Fonts are in the list too, and are easy to forget: `waybar/style.css:2` asks
+for `Noto Sans Mono` + `Font Awesome 6 Free`/`Brands` — without the Font
+Awesome ones the bar renders tofu boxes instead of icons. (`config:67` also
+sets `pango:JetBrains Mono`, but that font isn't installed here — section 3.)
+
+`cliphist` is in the list but is **not** in Fedora's official repos, only in
+third-party COPRs — hence the `copr enable` before the install above, and the
+`copr disable` after, so it doesn't get pulled into future `dnf upgrade` runs
 (the package stays installed, just pinned):
 ```
 sudo dnf copr enable alternateved/cliphist
@@ -48,41 +68,71 @@ for available chroots before assuming a given COPR maintainer covers your releas
 Fedora ships two official-repo alternatives if you'd rather avoid COPR
 entirely — `clipman` (fedora repo, built for wlroots/sway specifically) or
 `gpaste` (updates repo, GNOME's clipboard manager) — but this config commits
-to cliphist (`config:88`, `config:109`).
+to cliphist (`config:94`, `config:116`).
 
 ## 2. Traced list, by where it's used
 
 | Binary / package | Referenced at | Purpose |
 |---|---|---|
-| `sway` | — | the WM itself |
-| `alacritty` | `config:13` (`$term`) | terminal |
-| `rofi` | `config:14` (`$menu`), `waybar/scripts/power_menu.sh:2` | app launcher, power menu picker |
-| `firefox` | `config:15` (`$browser`) | browser |
-| `nautilus` | `config:16` (`$filemanager`) | file manager |
-| `swaylock` | `config:19` (`$lock`) | screen locker |
-| `swaybg` | `config:28` (`output ... background`) | wallpaper (invoked internally by sway) |
-| `polkit-gnome` (`/usr/libexec/polkit-gnome-authentication-agent-1`) | `config:83` | polkit auth prompts |
-| `mako` | `config:84` | notification daemon |
-| `network-manager-applet` (`nm-applet`, `nm-connection-editor`) | `config:85`, `config:233` | network tray icon + editor |
-| `blueman` (`blueman-applet`) | `config:86`, `config:232` | bluetooth tray icon + manager |
-| `wlsunset` | `config:87`, `scripts/toggle-nightlight.sh` | night light / color temp |
-| `wl-clipboard` (`wl-paste`, `wl-copy`) | `config:88`, `config:187` | clipboard read + screenshot copy |
-| `cliphist` | `config:88` (store), `config:109` (`Super+V` picker) | clipboard history store + picker |
-| `swayidle` | `config:89` | idle timeout → lock/dpms |
-| `swaynag` | `config:105` | exit confirmation dialog |
-| `python3` + `i3ipc` (pip/dnf `python3-i3ipc`) | `scripts/reset-layout.sh`, `scripts/workspace_compact.py`, `scripts/reorder-workspace.py` | layout reset, workspace compaction, workspace reordering |
-| `grim`, `slurp` | `config:187` | region screenshot |
-| `libnotify` (`notify-send`) | `config:187` | screenshot confirmation toast |
-| `pulseaudio-utils`/`pipewire-pulseaudio` (`pactl`) | `config:193-196` | volume/mute keys |
-| `playerctl` | `config:197-200` | media keys |
-| `brightnessctl` | `config:203`, `scripts/brightness-down.sh` | brightness keys |
-| `glib2`/`gsettings-desktop-schemas` (`gsettings`) | `config:216-219`, `scripts/toggle-theme.sh` | GTK theme + dark mode toggle |
+| `sway` | — | the WM itself; also ships `swaybar`, `swaynag`, `swaymsg` |
+| `alacritty` | `config:9` (`$term`) | terminal |
+| `rofi` | `config:10` (`$menu`), `waybar/scripts/power_menu.sh:2` | app launcher, power menu picker |
+| `firefox` | `config:11` (`$browser`) | browser |
+| `nautilus` | `config:12` (`$filemanager`) | file manager |
+| `swaylock` | `config:15` (`$lock`) | screen locker |
+| `swaybg` | `config:24` (`output ... background`) | wallpaper (invoked internally by sway) |
+| `lxpolkit` | `config:89` | polkit authentication agent — draws the "authentication required" password dialog |
+| `SwayNotificationCenter` (`swaync`, `swaync-client`) | `config:90` (daemon), `config:114` (`Super+Shift+N` toggle) | notification daemon + notification center. Replaced `mako` on 2026-08-20; configured in `swaync/` at the repo root |
+| `network-manager-applet` (`nm-applet`) | `config:91` | network tray icon |
+| `nm-connection-editor` | `config:235` (window rule), waybar tray menu | network connection editor |
+| `blueman` (`blueman-applet`, `blueman-manager`) | `config:92`, `config:234` | bluetooth tray icon + manager |
+| `wlsunset` | `config:93`, `scripts/toggle-nightlight.sh` | night light / color temp |
+| `wl-clipboard` (`wl-paste`, `wl-copy`) | `config:94`, `config:194` | clipboard read + screenshot copy |
+| `cliphist` | `config:94` (store), `config:116` (`Super+V` picker) | clipboard history store + picker |
+| `swayidle` | `config:95` | idle timeout → lock/dpms |
+| `swaynag` (in `sway`) | `config:111` | exit confirmation dialog |
+| `python3` + `python3-i3ipc` | `scripts/reset-layout.sh`, `scripts/workspace_compact.py`, `scripts/reorder-workspace.py`, `waybar/scripts/mediaplayer.py` | layout reset, workspace compaction, workspace reordering, media module |
+| `grim`, `slurp` | `config:194` | region screenshot |
+| `libnotify` (`notify-send`) | `config:194` | screenshot confirmation toast |
+| `pulseaudio-utils`/`pipewire-pulseaudio` (`pactl`) | `config:200-203` | volume/mute keys |
+| `playerctl` | `config:204-207`, `waybar/scripts/mediaplayer.py` | media keys, waybar media module |
+| `brightnessctl` | `config:210-211`, `scripts/brightness-down.sh` | brightness keys |
+| `glib2`/`gsettings-desktop-schemas` (`gsettings`) | `config:223-226`, `scripts/toggle-theme.sh` | GTK theme + dark mode toggle |
 | `gnome-themes-extra` | same as above | provides the `Adwaita`/`Adwaita-dark` GTK theme names |
-| `waybar` | `config:226` | status bar |
-| `pavucontrol` | `config:231` (window rule), `waybar/config.jsonc:147` (pulseaudio on-click) | volume mixer GUI |
+| `waybar` | `config:83` (`swaybar_command`) | status bar |
+| `pavucontrol` | `config:233` (window rule), `waybar/config.jsonc:136` (pulseaudio on-click) | volume mixer GUI |
+| `google-noto-sans-mono-vf-fonts`, `fontawesome-6-free-fonts`, `fontawesome-6-brands-fonts` | `waybar/style.css:2` | waybar text + icon glyphs |
+| `jetbrains-mono-fonts` | `config:67` (`font pango:`) | titlebar/UI font |
 | `systemd` (`systemd-inhibit`, `systemctl`, `loginctl`) | `waybar/scripts/idle_inhibitor.sh`, `waybar/scripts/power_menu.sh` | idle inhibit toggle, power actions |
 
 ## 3. Known gaps
+
+Fixed 2026-08-20: **the polkit agent**. `config:89` used to exec
+`/usr/libexec/polkit-gnome-authentication-agent-1`, but `polkit-gnome` was
+dropped from the Fedora 43 repos, so that file didn't exist and the exec
+failed silently — `polkitd` was running with no way to prompt, so every action
+needing authentication was denied and surfaced as a vague GUI error. Now
+`exec lxpolkit` (`/usr/bin/lxpolkit`), chosen over `mate-polkit`/`xfce-polkit`/
+`polkit-kde` for having no desktop-environment deps and a stable binary path
+rather than a versioned one under `/usr/libexec`. Verify with `pkexec true`:
+a graphical prompt means the agent is live, a terminal prompt means it isn't
+(that's `pkttyagent`, polkit's fallback).
+
+**Open (2026-08-20): `pavucontrol` is not installed** (`config:233` window
+rule, `waybar/config.jsonc:136` pulseaudio on-click) — clicking the volume
+module currently does nothing. Not in `packages.txt` (installed-only list);
+`sudo dnf install pavucontrol`, then add it there.
+
+**Open (2026-08-20): `jetbrains-mono-fonts` is not installed** — `fc-list`
+returns no JetBrains face, so `config:67`'s `pango:JetBrains Mono 10` silently
+falls back to the default monospace. Cosmetic only. Not in `packages.txt`;
+`sudo dnf install jetbrains-mono-fonts`, then add it there.
+
+**Open (2026-08-20): `gnome-themes-extra` is not installed** — `config:223-226`
+and `scripts/toggle-theme.sh` set the GTK theme to `Adwaita`/`Adwaita-dark`.
+The dark variant still resolves via libadwaita on GTK4 apps, but GTK3 apps may
+not get the named theme. Not in `packages.txt`; install and add it there if
+GTK3 apps look wrong.
 
 ~~`waybar/config.jsonc:158` execs `~/.config/waybar/mediaplayer.py`...~~
 Fixed 2026-07-16: `waybar/mediaplayer.py` now exists, wrapping `playerctl
@@ -92,7 +142,7 @@ package dependency — it only needs `playerctl` (already listed above) and
 
 Fixed 2026-07-16: `cliphist` is now installed via the `alternateved/cliphist`
 COPR (see section 1 for why not `wef/cliphist`). `swaymsg reload` (or
-re-login) so `config:88`'s watcher starts before `Super+V` (`config:109`)
+re-login) so `config:94`'s watcher starts before `Super+V` (`config:116`)
 will have anything to show.
 
 ## 4. Not config-traced, but implied

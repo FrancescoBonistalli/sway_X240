@@ -86,7 +86,7 @@ bar {
 
 ### Autostart ###
 exec ~/.config/sway/scripts/workspace_compact.py
-exec /usr/libexec/polkit-gnome-authentication-agent-1
+exec lxpolkit
 exec swaync
 exec nm-applet --indicator
 exec blueman-applet
