@@ -38,7 +38,7 @@ input "type:touchpad" {
     accel_profile adaptive
     pointer_accel 0.2
     drag_lock disabled
-    scroll_factor 0.5
+    scroll_factor 0.65
 }
 
 # Trackpoint - classic ThinkPad red nub

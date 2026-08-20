@@ -76,6 +76,23 @@ button:hover {
     color: #cdd6f4;
 }
 
+/* Right-hand cluster sits tighter than the 10px default above: on a 1366px
+   screen that group is crowded, so it gets 6px (12px between neighbours,
+   plus the bar's own 4px "spacing"). Scoped to .modules-right so the left
+   and centre modules keep their roomier padding. */
+.modules-right #custom-idle_inhibitor,
+.modules-right #pulseaudio,
+.modules-right #network,
+.modules-right #cpu,
+.modules-right #memory,
+.modules-right #temperature,
+.modules-right #backlight,
+.modules-right #battery,
+.modules-right #tray,
+.modules-right #custom-power {
+    padding: 0 6px;
+}
+
 #window,
 #workspaces {
     margin: 0 4px;
