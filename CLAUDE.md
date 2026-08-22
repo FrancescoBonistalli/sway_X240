@@ -31,7 +31,7 @@ Because `push.sh` always commits with the literal message "update configs", chec
 - `sway/sway-keybindings.md` — human-readable keybinding cheatsheet. Reflects `sway/config` (the active one); update it when active keybindings change.
 - `sway/scripts/` — helper scripts invoked from the Sway config (`workspace_compact.py` renumbers workspaces via i3ipc on window/workspace events, `toggle-theme.sh` flips GNOME/GTK light-dark via `gsettings`, `brightness-down.sh` wraps `brightnessctl` with a floor).
 - `sway/wallpaper.jpg` — background image, also referenced by `swaylock/config`.
-- `waybar/config.jsonc`, `waybar/style.css` — Waybar bar config/styling. `waybar/power_menu.sh` (+ `power_menu.xml`) implements the custom power-menu module. `waybar/notes.txt` is a scratch/snippet file, not authoritative config.
+- `waybar/config.jsonc`, `waybar/style.css` — Waybar bar config/styling. `waybar/power_menu.sh` (+ `power_menu.xml`) implements the custom power-menu module. The `pulseaudio` module's `on-click` opens `pavucontrol` directly. `waybar/scripts/audio_menu.sh` is an unused rofi-menu alternative (mute/mic-mute toggle, output-sink switching, "Open mixer") kept around in case a lighter menu is wanted later instead of full `pavucontrol`. `waybar/notes.txt` is a scratch/snippet file, not authoritative config.
 - `alacritty/alacritty.toml` — Alacritty terminal config.
 - `swaylock/config` — swaylock (lock screen) config; Catppuccin Mocha color scheme, shares the Sway wallpaper.
 - `swaync/config.json`, `swaync/style.css` — SwayNotificationCenter (notification daemon + notification center) config/styling. Started from `sway/config` (`exec swaync`) and toggled with `$mod+shift+n` (`swaync-client -t -sw`).

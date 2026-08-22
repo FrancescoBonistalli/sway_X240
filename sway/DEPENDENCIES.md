@@ -118,10 +118,18 @@ rather than a versioned one under `/usr/libexec`. Verify with `pkexec true`:
 a graphical prompt means the agent is live, a terminal prompt means it isn't
 (that's `pkttyagent`, polkit's fallback).
 
-**Open (2026-08-20): `pavucontrol` is not installed** (`config:233` window
-rule, `waybar/config.jsonc:136` pulseaudio on-click) — clicking the volume
-module currently does nothing. Not in `packages.txt` (installed-only list);
-`sudo dnf install pavucontrol`, then add it there.
+Fixed 2026-08-22: **the volume module click did nothing.**
+`waybar/config.jsonc`'s `pulseaudio` `on-click` ran `pavucontrol`, but it
+wasn't installed, so clicking silently no-op'd. `pavucontrol` is now
+installed (added to `packages.txt`) and `on-click` calls it directly again —
+its own UI already covers mute, per-app volume, and output/input device
+selection.
+
+A rofi-menu alternative (`waybar/scripts/audio_menu.sh`, same pattern as
+`power_menu.sh`: mute/mic-mute toggle, output-sink switching via `pactl
+set-default-sink` + `move-sink-input`, and an "Open mixer" entry for
+`pavucontrol`) was built but isn't wired up — kept in the repo unused, in
+case a lighter/keyboard-driven menu is wanted over full `pavucontrol` later.
 
 **Open (2026-08-20): `jetbrains-mono-fonts` is not installed** — `fc-list`
 returns no JetBrains face, so `config:67`'s `pango:JetBrains Mono 10` silently
