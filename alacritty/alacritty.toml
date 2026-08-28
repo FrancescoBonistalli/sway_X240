@@ -5,3 +5,9 @@ size = 16.0
 key = "Return"
 mods = "Shift"
 chars = "\u001B\r"
+
+# https://github.com/alacritty/alacritty-theme
+#[general]
+#import = [
+#    "~/.config/alacritty/themes/themes/dracula_plus.toml"
+#]
