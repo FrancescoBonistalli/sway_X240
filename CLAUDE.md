@@ -35,6 +35,7 @@ Because `push.sh` always commits with the literal message "update configs", chec
 - `alacritty/alacritty.toml` — Alacritty terminal config.
 - `swaylock/config` — swaylock (lock screen) config; Catppuccin Mocha color scheme, shares the Sway wallpaper.
 - `swaync/config.json`, `swaync/style.css` — SwayNotificationCenter (notification daemon + notification center) config/styling. Started from `sway/config` (`exec swaync`) and toggled with `$mod+shift+n` (`swaync-client -t -sw`).
+- `drafts/` — shelved config work, not part of the active setup and not touched by `sync.sh`/`install.sh` (it sits outside `DIRS` in `sync-lib.sh` entirely, not just excluded by pattern). Each subfolder has its own `README.md` explaining what it is and how to reapply it.
 
 ## Conventions
 

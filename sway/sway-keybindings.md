@@ -37,7 +37,7 @@ The **Mod key** is `Super` (Windows key).
 | `Super + Ctrl + T` | Split vertical |
 | `Super + S` | Toggle waybar visibility *(temporary — was Stacking layout, reverted until the stuck-stacking bug is fixed)* |
 | `Super + W` | Tabbed layout |
-| `Super + Shift + S` | Reset stuck tabbed/stacking layout back to tiling (whole workspace) |
+| `Super + Shift + R` | Reset stuck tabbed/stacking layout back to tiling (whole workspace) |
 | `Super + Z` | Toggle split direction |
 | `Super + A` | Focus parent container |
 
@@ -59,6 +59,7 @@ The **Mod key** is `Super` (Windows key).
 | Keybind | Action |
 |---|---|
 | `Print` | Region screenshot → clipboard |
+| `Super + Shift + S` | Region screenshot → clipboard (same as `Print`) |
 
 ## Media & brightness
 | Keybind | Action |
@@ -66,7 +67,7 @@ The **Mod key** is `Super` (Windows key).
 | `XF86AudioRaiseVolume` / `XF86AudioLowerVolume` | Volume up/down |
 | `XF86AudioMute` | Mute toggle |
 | `XF86AudioPlay/Next/Prev` | Media controls |
-| `$mod + P` | Play/pause media (playerctl) |
+| `$mod + P` / `$mod + K` | Play/pause media (playerctl) |
 | `XF86MonBrightnessUp/Down` | Brightness up/down |
 
 ## System

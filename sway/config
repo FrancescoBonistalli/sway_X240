@@ -168,7 +168,7 @@ bindsym $mod+Mod1+Down  splitv
 
 bindsym $mod+s exec swaymsg bar mode toggle  # TEMP: was `layout stacking`; reverted until the stuck-stacking bug is fixed
 bindsym $mod+w layout tabbed
-bindsym $mod+Shift+s exec ~/.config/sway/scripts/reset-layout.sh
+bindsym $mod+Shift+r exec ~/.config/sway/scripts/reset-layout.sh
 bindsym $mod+z layout toggle split
 bindsym $mod+Shift+f exec pkill -SIGUSR1 waybar
 bindsym $mod+Shift+space floating toggle
@@ -192,6 +192,7 @@ bindsym $mod+r mode "resize"
 
 # Screenshots
 bindsym Print exec grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot copied"
+bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot copied"
 # Shift+Print save-to-file binding removed: neither Shift+Print nor Sys_Req
 # fires reliably on this keyboard. See CLAUDE.md "Known gotcha: screenshot
 # save-to-file binding" before re-adding.
@@ -205,6 +206,7 @@ bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 bindsym $mod+p exec playerctl play-pause
+bindsym $mod+k exec playerctl play-pause
 
 # Brightness
 bindsym XF86MonBrightnessUp exec brightnessctl set 5%+

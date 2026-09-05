@@ -18,7 +18,7 @@ container — so `Super+Ctrl+S` (`splith`) on the focused window may look like
 it does nothing if the *workspace*, not the inner container, is the one stuck
 in tabbed/stacking.
 
-Fix: `Super+Shift+S` runs `scripts/reset-layout.sh`, which walks the focused
+Fix: `Super+Shift+R` runs `scripts/reset-layout.sh`, which walks the focused
 workspace (including the workspace node itself, not just descendants) and
 resets every `tabbed`/`stacking` container to `splith`.
 

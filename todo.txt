@@ -1,2 +1,3 @@
 - fix waybar song title remain after closing spotify
-- alt tab not working with 2 vert tab on the left and one full on the right 
+- alt tab not working with 2 vert tab on the left and one full on the right
+- fix theme embedded repo 
