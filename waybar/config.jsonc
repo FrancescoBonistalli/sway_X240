@@ -17,6 +17,7 @@
 	"clock"
     ],
     "modules-right": [
+        "sway/language",
         "custom/idle_inhibitor",
         "pulseaudio",
         "network",
@@ -49,7 +50,11 @@
         "format": "<span style=\"italic\">{}</span>"
     },
     "sway/language": {
-        "format": "{variant}"
+        // {short} is the layout code itself ("us"/"it"); {shortDescription}
+        // would render us as "en", which is not what we want here.
+        "format": "{short}",
+        "tooltip-format": "{long}",
+        "hide-single-layout": true
     },
     "sway/scratchpad": {
         "format": "{icon} {count}",

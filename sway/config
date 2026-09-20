@@ -49,7 +49,8 @@ input "type:pointer" {
 
 # Keyboard
 input "type:keyboard" {
-    xkb_layout us         
+    # us is first, so it is the default on login; $mod+space cycles to it
+    xkb_layout us,it
     repeat_delay 300
     repeat_rate 40
 }
@@ -172,7 +173,9 @@ bindsym $mod+Shift+r exec ~/.config/sway/scripts/reset-layout.sh
 bindsym $mod+z layout toggle split
 bindsym $mod+Shift+f exec pkill -SIGUSR1 waybar
 bindsym $mod+Shift+space floating toggle
-bindsym $mod+space focus mode_toggle
+# Cycle keyboard layout (us <-> it); waybar's sway/language module shows which
+bindsym $mod+space input type:keyboard xkb_switch_layout next
+bindsym $mod+ctrl+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # Scratchpad

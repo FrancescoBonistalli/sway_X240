@@ -69,7 +69,6 @@ button:hover {
 #mode,
 #custom-idle_inhibitor,
 #scratchpad,
-#power-profiles-daemon,
 #mpd {
     padding: 0 10px;
     background-color: transparent;
@@ -132,22 +131,6 @@ button:hover {
     animation-timing-function: steps(12);
     animation-iteration-count: infinite;
     animation-direction: alternate;
-}
-
-#power-profiles-daemon {
-    padding-right: 15px;
-}
-
-#power-profiles-daemon.performance {
-    color: #f38ba8;
-}
-
-#power-profiles-daemon.balanced {
-    color: #89b4fa;
-}
-
-#power-profiles-daemon.power-saver {
-    color: #a6e3a1;
 }
 
 label:focus {
@@ -257,9 +240,8 @@ label:focus {
 }
 
 #language {
-    color: #cba6f7;
-    padding: 0 5px;
-    margin: 0 5px;
+    color: #fab387;
+    padding: 0 6px;
     min-width: 16px;
 }
 

@@ -20,7 +20,7 @@ The **Mod key** is `Super` (Windows key).
 | `Super + Shift + Q` | Close window |
 | `Super + Shift + F` | Intermediate fullscreen: hide/show waybar only |
 | `Super + Shift + Space` | Toggle floating |
-| `Super + Space` | Toggle focus between tiled/floating |
+| `Super + Ctrl + Space` | Toggle focus between tiled/floating |
 | `Super + R` | Resize mode (arrows to resize, `Escape` to exit) |
 
 ## Focus & movement
@@ -69,6 +69,11 @@ The **Mod key** is `Super` (Windows key).
 | `XF86AudioPlay/Next/Prev` | Media controls |
 | `$mod + P` / `$mod + K` | Play/pause media (playerctl) |
 | `XF86MonBrightnessUp/Down` | Brightness up/down |
+
+## Keyboard layout
+| Keybind | Action |
+|---|---|
+| `Super + Space` | Cycle keyboard layout: `us` (default) ↔ `it`. The active one is shown as `us`/`it` in waybar. |
 
 ## System
 | Keybind | Action |
