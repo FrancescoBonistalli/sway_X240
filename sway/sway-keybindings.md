@@ -58,8 +58,10 @@ The **Mod key** is `Super` (Windows key).
 ## Screenshots
 | Keybind | Action |
 |---|---|
-| `Print` | Region screenshot → clipboard |
-| `Super + Shift + S` | Region screenshot → clipboard (same as `Print`) |
+| `Print` | Region screenshot → `~/Pictures/Screenshots` + clipboard |
+| `Super + Shift + S` | Same as `Print` |
+
+Holding or re-pressing either key while the selector is up does nothing — only a selection or `Esc` ends it.
 
 ## Media & brightness
 | Keybind | Action |

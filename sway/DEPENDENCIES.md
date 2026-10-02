@@ -87,13 +87,13 @@ to cliphist (`config:94`, `config:116`).
 | `nm-connection-editor` | `config:235` (window rule), waybar tray menu | network connection editor |
 | `blueman` (`blueman-applet`, `blueman-manager`) | `config:92`, `config:234` | bluetooth tray icon + manager |
 | `wlsunset` | `config:93`, `scripts/toggle-nightlight.sh` | night light / color temp |
-| `wl-clipboard` (`wl-paste`, `wl-copy`) | `config:94`, `config:194` | clipboard read + screenshot copy |
+| `wl-clipboard` (`wl-paste`, `wl-copy`) | `config:94`, `scripts/screenshot.sh` | clipboard read + screenshot copy |
 | `cliphist` | `config:94` (store), `config:116` (`Super+V` picker) | clipboard history store + picker |
 | `swayidle` | `config:95` | idle timeout → lock/dpms |
 | `swaynag` (in `sway`) | `config:111` | exit confirmation dialog |
 | `python3` + `python3-i3ipc` | `scripts/reset-layout.sh`, `scripts/workspace_compact.py`, `scripts/reorder-workspace.py`, `waybar/scripts/mediaplayer.py` | layout reset, workspace compaction, workspace reordering, media module |
-| `grim`, `slurp` | `config:194` | region screenshot |
-| `libnotify` (`notify-send`) | `config:194` | screenshot confirmation toast |
+| `grim`, `slurp` | `scripts/screenshot.sh` | region screenshot |
+| `libnotify` (`notify-send`) | `scripts/screenshot.sh` | screenshot confirmation toast |
 | `pulseaudio-utils`/`pipewire-pulseaudio` (`pactl`) | `config:200-203` | volume/mute keys |
 | `playerctl` | `config:204-207`, `waybar/scripts/mediaplayer.py` | media keys, waybar media module |
 | `brightnessctl` | `config:210-211`, `scripts/brightness-down.sh` | brightness keys |

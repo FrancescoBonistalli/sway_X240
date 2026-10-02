@@ -194,8 +194,10 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Screenshots
-bindsym Print exec grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot copied"
-bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot copied"
+# --no-repeat + the script's lock: holding/re-pressing the key while the
+# selector is up does nothing; only a selection or Esc ends it.
+bindsym --no-repeat Print exec ~/.config/sway/scripts/screenshot.sh
+bindsym --no-repeat $mod+Shift+s exec ~/.config/sway/scripts/screenshot.sh
 # Shift+Print save-to-file binding removed: neither Shift+Print nor Sys_Req
 # fires reliably on this keyboard. See CLAUDE.md "Known gotcha: screenshot
 # save-to-file binding" before re-adding.
