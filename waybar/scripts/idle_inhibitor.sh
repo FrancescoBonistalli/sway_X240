@@ -5,6 +5,10 @@
 # tracked by a pidfile: the unit name is unique, so overlapping or repeated toggles
 # (waybar clicks can fire more than once) can never leave a second, untracked
 # inhibitor behind blocking suspend.
+#
+# handle-lid-switch is deliberately not inhibited: closing the lid must always
+# suspend, inhibitor on or not. logind ignores idle/sleep locks for the lid
+# (LidSwitchIgnoreInhibited=yes, the default), so only that lock could block it.
 
 UNIT="waybar-idle-inhibitor.service"
 LOCKFILE="${XDG_RUNTIME_DIR:-/tmp}/waybar-idle-inhibitor.lock"
@@ -30,7 +34,7 @@ case "$1" in
             systemctl --user stop "$UNIT"
         else
             systemd-run --user --quiet --collect --unit="$UNIT" \
-                systemd-inhibit --what=idle:sleep:handle-lid-switch --who="waybar-idle-inhibitor" --why="Manually inhibited" --mode=block sleep infinity
+                systemd-inhibit --what=idle:sleep --who="waybar-idle-inhibitor" --why="Manually inhibited" --mode=block sleep infinity
         fi
         pkill -RTMIN+8 waybar
         ;;
