@@ -1,2 +1,15 @@
 - fix waybar song title remain after closing spotify
 - alt tab not working with 2 vert tab on the left and one full on the right
+- opt-in "don't suspend on lid close" toggle (default stays: lid close suspends)
+    how: a handle-lid-switch inhibitor lock; while held logind ignores the lid, released = normal
+      systemd-inhibit --what=handle-lid-switch --why="keep awake with lid closed" sleep infinity
+    no root / logind.conf changes, gone after reboot or logout
+    same lock that was removed from idle_inhibitor.sh in ecc765f, so known to work here
+    plan: separate toggle from the $mod+c idle inhibitor, built the same way
+      - waybar/scripts/lid_inhibitor.sh: own transient user unit (e.g. waybar-lid-inhibitor.service), same flock + debounce
+      - keybinding: a free key, to be chosen
+      - waybar indicator shown only while active (so a running laptop doesn't end up in a bag)
+    to decide:
+      - screen: internal panel stays on with lid closed unless sway is told:
+          bindswitch lid:on output eDP-1 disable   (+ matching lid:off ... enable)
+      - locking: nothing locks on lid close while the inhibitor is on, unless a bindswitch for $lock is added

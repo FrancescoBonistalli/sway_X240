@@ -28,3 +28,4 @@ google-noto-sans-mono-vf-fonts
 fontawesome-6-free-fonts
 fontawesome-6-brands-fonts
 pavucontrol
+upower

@@ -93,7 +93,8 @@ to cliphist (`config:94`, `config:116`).
 | `swaynag` (in `sway`) | `config:111` | exit confirmation dialog |
 | `python3` + `python3-i3ipc` | `scripts/reset-layout.sh`, `scripts/workspace_compact.py`, `scripts/reorder-workspace.py`, `waybar/scripts/mediaplayer.py` | layout reset, workspace compaction, workspace reordering, media module |
 | `grim`, `slurp` | `scripts/screenshot.sh` | region screenshot |
-| `libnotify` (`notify-send`) | `scripts/screenshot.sh` | screenshot confirmation toast |
+| `libnotify` (`notify-send`) | `scripts/screenshot.sh`, `scripts/battery-notify.sh` | screenshot confirmation toast, low-battery notifications |
+| `upower` (`upowerd`) + `glib2` (`gdbus`) + `systemd` (`busctl`) | `scripts/battery-notify.sh` | low-battery notifier: `gdbus monitor` waits on UPower's warning-level signals, `busctl` reads the level/percentage |
 | `pulseaudio-utils`/`pipewire-pulseaudio` (`pactl`) | `config:200-203` | volume/mute keys |
 | `playerctl` | `config:204-207`, `waybar/scripts/mediaplayer.py` | media keys, waybar media module |
 | `brightnessctl` | `config:210-211`, `scripts/brightness-down.sh` | brightness keys |

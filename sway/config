@@ -89,6 +89,7 @@ bar {
 exec ~/.config/sway/scripts/workspace_compact.py
 exec lxpolkit
 exec swaync
+exec ~/.config/sway/scripts/battery-notify.sh
 exec nm-applet --indicator
 exec blueman-applet
 exec_always pkill wlsunset; sleep 1 && wlsunset -t 3999 -T 4000
